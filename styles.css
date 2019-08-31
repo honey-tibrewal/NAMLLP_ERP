@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+.horizontalline{
+    width:99.8%;
+    border: 1px solid #132d1a;
+    background-color: #132d1a;
+    border-radius: 2px;
+    height:2px;
+}
+#template{
+    font-family: sans-serif;
+    color:#132d1a;
+}
