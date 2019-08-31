@@ -1,0 +1,132 @@
+.left{
+    float:left;
+    width: calc(100% - 600px);
+    height:100%;
+    min-width:298px;
+    margin-left:10px;
+}
+.lefttransdiv{
+    background-image: linear-gradient(to right, #132d1a,  rgb(190, 214, 200, 0.5));
+    width: calc(100% - 35px);
+    height: calc(20% - 40px);
+    font-family: sans-serif;
+    color: white;
+    margin: 5px;
+    padding: 15px;
+    margin-left: 0px;
+    position: relative;
+    min-height:46px;
+}
+.lefttransdiv:before { 
+    content:''; 
+    display:inline-block; 
+    height:100%; 
+    vertical-align:middle; 
+}
+.leftclipjob{
+    content: url(../images/jobman.png);
+    height: 40px;
+    width: 40px;
+    margin-right: 8px;
+    float: left;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    position: inherit;
+    top: calc((100% - 44px)/2);
+}
+.leftcliptime{
+    content: url(../images/timeman.png);
+    height: 40px;
+    width:40px;
+    margin-right: 8px;
+    float: left;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    position: inherit;
+    top: calc((100% - 44px)/2);
+}
+.leftclipleave{
+    content: url(../images/leaveman.png);
+    height:45px;
+    width:40px;
+    margin-right: 8px;
+    float: left;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    position: inherit;
+    top: calc((100% - 44px)/2);
+}
+.lefttransdiv:hover{
+    background-image: linear-gradient(to right, #132d1a, #132d1a);
+    color: #fff;
+    cursor: pointer;
+}
+.lefttransdiv:hover .jobcount{
+    color:#fff;
+}
+.activitieslist ul li a{
+    height: 45px;
+    line-height: 45px;
+    font-family: sans-serif;
+    padding:10px;
+    font-size: 13px;
+    color: #132d1a;
+}
+.homerightmaindiv{
+    width:320px;
+    float:right;
+    margin-top:5px
+}
+.jobcount{
+    float: right;
+    color:#132d1a;
+    font-size: 24px;
+    margin-right: 15px;
+    position: inherit;
+    top: calc((100% - 28px)/2);
+}
+.activitieslist ul li{
+    width:99.5%;
+    height:45px;
+    border:1px solid #ddd;
+    background-color: rgb(190, 214, 200, 0.5);
+}
+.activitieslist ul{
+    margin: 0px;
+    padding:0px;
+}
+.activitieslist ul li:hover{
+    background-color: rgb(154, 204, 174);
+    cursor:pointer;
+}
+/*@media screen and (max-width: 631px) {
+    .homerightmaindiv {
+       width: 208px;
+    }
+}*/
+.userstats{
+    width: 20px;
+    height:25px;
+    border:1px solid #ddd;
+    border-radius: 10px;
+    color: #ffffff;
+    text-align: center;
+    background-color: #ddd;
+    padding-left: 10px;
+    padding-right: 10px;
+    float: right;
+    margin: 10px;
+    line-height: 25px;
+}
+.hometimesheetheader{
+    background-color: rgb(190, 214, 200, 0.5);
+    color: #132d1a;
+    border:1px solid #ddd;
+    font-family:sans-serif;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+}
+.lefttransdiv:focus{
+    outline:none;
+}

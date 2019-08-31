@@ -1,0 +1,277 @@
+<link  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"  rel="stylesheet">
+
+<div class="mainjobcontent">
+    <div style="height: 40px;margin-bottom: 10px;">
+    <div class="confirmdiv" [hidden]="!showconfirmmessage"><span>Job Saved!</span></div>
+    <span class="button create" (click)="openModalWithClass(template)">CREATE</span>
+    <!-- <span class="download" (click) = "exportAsXLSX()" matTooltip="Download"> </span> -->
+    </div>
+    <div *ngIf = "jobsarr; else noJobs">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Action</th>
+                    <th scope="col">Client Name</th>
+                    <th scope="col">Work</th>
+                    <th scope="col">Concerned Person</th>
+                    <th scope="col">Contact date</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let job of returnedArr">
+                    <td scope="col"><span (click) = "updateJobStatus(job)" class="closejob" matTooltip="Close Job"></span></td>
+                    <td scope="col">{{job.contactmaster.clientname}}</td>
+                    <td scope="col">{{job.contactmaster.serviceline}}</td>
+                    <td scope="col">{{job.referralsource.refname}}</td>
+                    <td scope ="col">{{job.contactmaster.contactdate.toDate() | date : 'dd/MM/yyyy'}}</td>
+                    <td scope="col">{{job.status}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination [totalItems]="jobsarr.length" (pageChanged)="pageChanged($event)"></pagination>
+    </div>
+    <ng-template #noJobs>
+            <hr><h5>There are no Jobs</h5>
+    </ng-template>
+    <ng-template #template>
+            <div class="modal-header">
+                <span class="leftclipjob"></span><h4 class="modal-title pull-left">New Job</h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="jobdetails" (ngSubmit)="onSubmit(jobdetails.value)">
+                    <div style="position: relative">
+                <div>
+                    <form [formGroup]="jobdetails.get('contactmaster')">
+                    <h5>Contact Master</h5>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="Client Name" [formControl]="jobdetails.get('contactmaster').get('clientname')" required>
+                            <mat-error *ngIf="jobdetails.get('contactmaster').get('clientname').invalid">{{getErrorMessage('clientname')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Contact Code" [formControl]="jobdetails.get('contactmaster').get('clientcode')" required>
+                            <mat-error *ngIf="jobdetails.get('contactmaster').get('clientcode').invalid">{{getErrorMessage('clientcode')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="rightjobmodal">
+                            <mat-form-field>
+                                <input matInput placeholder="Contact Name" [formControl]="jobdetails.get('contactmaster').get('contactname')" required>
+                                <mat-error *ngIf="jobdetails.get('contactmaster').get('contactname').invalid">{{getErrorMessage('contactname')}}</mat-error>
+                            </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                            <mat-form-field>
+                                <mat-label>Prefix</mat-label>
+                                <mat-select matNativeControl required [formControl]="jobdetails.get('contactmaster').get('prefix')">
+                                    <mat-option *ngFor="let title of prefixes" [value] = "title.value">
+                                        {{title.viewValue}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="jobdetails.get('contactmaster').get('prefix').invalid">{{getErrorMessage('prefix')}}</mat-error>
+                            </mat-form-field>
+                    </div>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="Contact No." [formControl]="jobdetails.get('contactmaster').get('contactno')" required>
+                            <mat-error *ngIf="jobdetails.get('contactmaster').get('contactno').invalid">{{getErrorMessage('contactno')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput [max]="maxDate" [matDatepicker]="picker" placeholder="First Contact Date" [formControl]="jobdetails.get('contactmaster').get('contactdate')" required>
+                            <mat-error *ngIf="jobdetails.get('contactmaster').get('contactdate').invalid">{{getErrorMessage('contactdate')}}</mat-error>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="Primary Industry" [formControl]="jobdetails.get('contactmaster').get('primaryindus')" required>
+                            <mat-error *ngIf="jobdetails.get('contactmaster').get('primaryindus').invalid">{{getErrorMessage('primaryindus')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Official Email ID" [formControl]="jobdetails.get('contactmaster').get('email')" required>
+                            <mat-error *ngIf="jobdetails.get('contactmaster').get('email').invalid">{{getErrorMessage('email')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="Designation" [formControl]="jobdetails.get('contactmaster').get('designation')"required>
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Primary Sub Industry" [formControl]="jobdetails.get('contactmaster').get('primarysubindus')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="rightjobmodal">
+                            <mat-form-field>
+                                <input matInput [formControl]="jobdetails.get('contactmaster').get('comments')" placeholder="Comments">
+                            </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                            <mat-form-field>
+                                <input matInput placeholder="Service Line" [formControl]="jobdetails.get('contactmaster').get('serviceline')" required>
+                            </mat-form-field>
+                    </div>
+                </form>
+                </div>
+                <div>
+                    <form [formGroup]="jobdetails.get('referralsource')">
+                    <h5>Referral Source</h5>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="India Firm Referrer Name" [formControl]="jobdetails.get('referralsource').get('refname')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Firm Office Location" [formControl]="jobdetails.get('referralsource').get('officeloc')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="rightjobmodal">
+                            <mat-form-field>
+                                <input matInput placeholder="India Firm Referrer Email ID" [formControl]="jobdetails.get('referralsource').get('refemailid')" required>
+                            </mat-form-field>
+                        </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Other Lead Source" [formControl]="jobdetails.get('referralsource').get('otherleadsrc')" required>
+                        </mat-form-field>
+                    </div>
+                    </form>
+                </div>
+                <div>
+                    <form [formGroup]="jobdetails.get('clientdetails')">
+                    <h5>Client Details</h5>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="Client Full Name" [formControl]="jobdetails.get('clientdetails').get('name')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Client Group" [formControl]="jobdetails.get('clientdetails').get('group')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="Legal Entity Type" [formControl]="jobdetails.get('clientdetails').get('legalent')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Website" [formControl]="jobdetails.get('clientdetails').get('website')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="Total Employees" [formControl]="jobdetails.get('clientdetails').get('totalemp')">
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Total Revenue(Crores)" [formControl]="jobdetails.get('clientdetails').get('totalrev')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="Assets" [formControl]="jobdetails.get('clientdetails').get('assets')">
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Share Capital" [formControl]="jobdetails.get('clientdetails').get('sharecap')">
+                        </mat-form-field>
+                    </div>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="Revenue" [formControl]="jobdetails.get('clientdetails').get('revenue')">
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Net Worth" [formControl]="jobdetails.get('clientdetails').get('networth')">
+                        </mat-form-field>
+                    </div>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="Fee(except GST)(INR)" [formControl]="jobdetails.get('clientdetails').get('fee')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Pipeline Description" [formControl]="jobdetails.get('clientdetails').get('pipelinedesc')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Expected Recovery%" [formControl]="jobdetails.get('clientdetails').get('exprecov')">
+                        </mat-form-field>
+                    </div>
+                    </form>
+                </div>
+                <div>
+                    <form [formGroup]="jobdetails.get('address')">
+                    <h5>Address</h5>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="Address1(Premises)" [formControl]="jobdetails.get('address').get('premises')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Address Type" [formControl]="jobdetails.get('address').get('addtype')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="Address3 (Area)" [formControl]="jobdetails.get('address').get('area')">
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Address2(Road)" [formControl]="jobdetails.get('address').get('road')">
+                        </mat-form-field>
+                    </div>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="State/Province" [formControl]="jobdetails.get('address').get('state')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="City" [formControl]="jobdetails.get('address').get('city')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="rightjobmodal">
+                        <mat-form-field>
+                            <input matInput placeholder="Zip" [formControl]="jobdetails.get('address').get('zip')" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="leftmodaldiv">
+                        <mat-form-field>
+                            <input matInput placeholder="Country" [formControl]="jobdetails.get('address').get('country')" required>
+                        </mat-form-field>
+                    </div>
+                    </form>
+                </div>
+                    </div>
+                    <div class="horizontalline dialogb"></div>
+                    <div style="    margin-left: calc((100% - 215px)/2);margin-top: 10px;">
+                        <button type="submit" class="button savebut" [disabled]="!jobdetails.get('contactmaster').valid || !jobdetails.get('address').valid || !jobdetails.get('clientdetails').valid || !jobdetails.get('referralsource').valid" 
+                        [ngClass] = "(jobdetails.get('contactmaster').valid && jobdetails.get('address').valid&& jobdetails.get('clientdetails').valid && jobdetails.get('referralsource').valid)?'activesave':''">Save</button>
+                        <span class="button" (click)="modalRef.hide()">Close</span>
+                    </div>
+                </form>
+            </div>
+          </ng-template>
+</div>

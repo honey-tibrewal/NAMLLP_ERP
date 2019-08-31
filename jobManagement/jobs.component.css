@@ -1,0 +1,92 @@
+.button{
+    display: inline-block;
+    height: 40px;
+    background-image: linear-gradient(to right, #588275, rgb(190, 214, 200, 0.5));
+    line-height: 40px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: sans-serif;
+    color: #132d1a;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 15px;
+}
+.create{
+    float: right;
+}
+.button:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    cursor:pointer;
+}
+.mainjobcontent{
+    width: calc(100% - 265px);
+    float: left;
+    margin-left: 5px;
+}
+.dialogb{
+    margin-top: 5px;
+}
+.savebut{
+    margin-right: 15px;
+    opacity : 0.35
+}
+.activesave{
+    opacity: 1;
+}
+.leftmodaldiv{
+    width: 50%;
+    /*float: left;*/
+    position: relative;
+}
+.rightjobmodal{
+    width: 50%;
+    float: right;
+    position: relative;
+}
+::ng-deep .mat-form-field-infix{
+    width:340px !important;
+}
+::ng-deep #picker{
+    width:320px !important;
+}
+.leftclipjob{
+    content: url(../images/jobman.png);
+    height: 40px;
+    width: 40px;
+    margin-right: 8px;
+}
+::ng-deep .cdk-overlay-container{
+    z-index: 3000;
+}
+.confirmdiv{
+    width: 200px;
+    z-index: 2000;
+    display: inline-block;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    height: 35px;
+    line-height: 35px;
+    background-color: #ffbf00;
+    margin-left: 30%;
+}
+.closejob{
+    content: url(../images/close.jpeg);
+    height: 18px;
+    width: 18px;
+    margin-right: 8px;
+}
+.closejob:hover{
+    cursor: pointer;
+}
+.download{
+    content: url(../images/download.jpeg);
+    height: 40px;
+    width: 30px;
+    margin-right: 8px;
+    float: right
+}
+.download:hover{
+    cursor: pointer;
+}

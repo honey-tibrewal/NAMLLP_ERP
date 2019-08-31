@@ -1,0 +1,130 @@
+<link  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"  rel="stylesheet">
+
+<div class="mainjobcontent">
+    <div style="height: 40px;margin-bottom: 10px;">
+        <div class="confirmdiv" [hidden]="!showconfirmmessage"><span>Employee Saved!</span></div>
+        <span class="button create" (click)="openModalWithClass(template1,'create','')">Add Employee</span>
+        <span class="download" (click) = "exportAsXLSX()" matTooltip="Download"> </span>
+    </div>
+    <div *ngIf = "employeessarr; else noemployees">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Actions</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Designation</th>
+                    <th scope="col">Joining Date</th>
+                    <th scope="col">Contact</th>
+                    <th scope="col">Used Leaves</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employee of returnedArr">
+                    <td scope="col">
+                        <span (click) = "updateEmployeeStatus(employee)" class="closeemp" matTooltip="Terminate Employee"></span>
+                        <span class="view" matTooltip="View" (click)="openModalWithClass(template1,'view', employee)"></span>
+                        <span (click) = "openModalWithClass(template1, 'edit', employee)" class= "edit" matTooltip="Edit"></span>
+                    </td>
+                    <td scope="col">{{employee.name}}</td>
+                    <td scope="col">{{employee.designation}}</td>
+                    <td scope="col">{{employee.joiningdate.toDate() | date : 'dd/MM/yyyy'}}</td>
+                    <td scope="col">{{employee.contactno}}</td>
+                    <td scope ="col">{{employee.leavetaken}}</td>
+                    <td scope="col">{{employee.status}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination [totalItems]="employeessarr.length" (pageChanged)="pageChanged($event)"></pagination>
+    </div>
+    <ng-template #noemployees>
+            <hr><h5>There are no Employees</h5>
+    </ng-template>
+    <ng-template #template1>
+            <div class="modal-header">
+                <div *ngIf="modalName == 'create'" style="display:inline-flex"><span class="leftclipjob"></span><h4 class="modal-title pull-left">New Employee</h4></div>
+                <div *ngIf="modalName == 'view'" style="display:inline-flex"><span class="leftclipjobview"></span><h4 class="modal-title pull-left">View Employee</h4></div>
+                <div *ngIf="modalName == 'edit'" style="display:inline-flex"><span class="leftclipjobedit"></span><h4 class="modal-title pull-left">Edit Employee</h4></div>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="employeedetails" (ngSubmit)="onSubmit(employeedetails.value)">
+                    <div style="position: relative">
+                        <div>
+                            <div class="rightjobmodal">
+                                <mat-form-field>
+                                    <input matInput placeholder="Employee Name" [formControl]="employeedetails.get('empname')" required>
+                                    <mat-error *ngIf="employeedetails.get('empname').invalid">{{getErrorMessage('empname')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="leftmodaldiv">
+                                <mat-form-field>
+                                    <input matInput [max]="maxDate" [matDatepicker]="picker" placeholder="Joining Date" [formControl]="employeedetails.get('joiningdate')" required>
+                                    <mat-error *ngIf="employeedetails.get('joiningdate').invalid">{{getErrorMessage('joiningdate')}}</mat-error>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="rightjobmodal">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Designation" [formControl]="employeedetails.get('designation')" required>
+                                        <mat-error *ngIf="employeedetails.get('designation').invalid">{{getErrorMessage('designation')}}</mat-error>
+                                    </mat-form-field>
+                            </div>
+                            <div class="leftmodaldiv">
+                                <mat-form-field>
+                                    <input matInput placeholder="Email id" [formControl]="employeedetails.get('email')" required>
+                                    <mat-error *ngIf="employeedetails.get('email').invalid">{{getErrorMessage('email')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="rightjobmodal">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Conatct No." [formControl]="employeedetails.get('contactno')" required>
+                                        <mat-error *ngIf="employeedetails.get('contactno').invalid">{{getErrorMessage('contactno')}}</mat-error>
+                                    </mat-form-field>
+                            </div>
+                            <div class="leftmodaldiv">
+                                <mat-form-field>
+                                    <input matInput placeholder="Total Leaves" [formControl]="employeedetails.get('leavesaccrued')" required>
+                                    <mat-error *ngIf="employeedetails.get('leavesaccrued').invalid">{{getErrorMessage('leavesaccrued')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="rightjobmodal">
+                                    <mat-form-field>
+                                        <input matInput placeholder="User Name" [formControl]="employeedetails.get('userName')" required>
+                                        <mat-error *ngIf="employeedetails.get('userName').invalid">{{getErrorMessage('userName')}}</mat-error>
+                                    </mat-form-field>
+                            </div>
+                            <div class="leftmodaldiv">
+                                    <mat-form-field>
+                                        <mat-label>Status</mat-label>
+                                        <mat-select matNativeControl required [formControl]="employeedetails.get('status')">
+                                            <mat-option *ngFor="let title of statuses" [value] = "title.value">
+                                                {{title.viewValue}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="employeedetails.get('status').invalid">{{getErrorMessage('status')}}</mat-error>
+                                    </mat-form-field>
+                            </div>
+                            <div class="leftmodaldiv">
+                                    <mat-form-field>
+                                        <input matInput type="password" placeholder="Password" [formControl]="employeedetails.get('password')" required>
+                                        <mat-error *ngIf="employeedetails.get('password').invalid">{{getErrorMessage('password')}}</mat-error>
+                                    </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="horizontalline dialogb" *ngIf="modalName != 'view'"></div>
+                        <div style="    margin-left: calc((100% - 215px)/2);margin-top: 10px;" *ngIf="modalName != 'view'">
+                    <button type="submit" class="button savebut" [disabled]="!employeedetails.get('empname').valid || !employeedetails.get('joiningdate').valid || !employeedetails.get('contactno').valid 
+                    || !employeedetails.get('email').valid || !employeedetails.get('leavesaccrued').valid || !employeedetails.get('designation').valid" 
+                        [ngClass] = "(employeedetails.get('empname').valid && employeedetails.get('joiningdate').valid && employeedetails.get('contactno').valid 
+                        && employeedetails.get('email').valid && employeedetails.get('leavesaccrued').valid && employeedetails.get('designation').valid) ?'activesave':''">Save</button>
+                    <span class="button" (click)="modalRef.hide()">Close</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </ng-template>
+</div>
