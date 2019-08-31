@@ -1,0 +1,96 @@
+div.logo{
+    content:url(http://www.namllp.com/wp-content/uploads/2018/02/cropped-naam-3.png);
+    width:250;
+    height:70;
+    float:left;
+}
+div.homeuser{
+    float:right;
+}
+.user{
+    border-radius: 35px;
+    height:70px;
+    width:70px;
+    background-color: rgb(190, 214, 200);
+    float: right;
+    margin-left: 10px;
+    border: 1px solid #132d1a;
+    content:url(../images/userdefault.jpeg)
+}
+.homeheader{
+    width: 100%;
+    height:75px;
+    margin-top:10px;
+    margin-bottom:10px;
+    min-width:802px;
+}
+.userName{
+    line-height: 70px;
+    height: 70px;
+    text-align: center;
+    float:left;
+    font-family:sans-serif;
+}
+.dashboardlink{
+    float: left;
+    margin: 10px;
+    height: 75px;
+    line-height: 75px;
+    margin-left: 8%;
+    font-family: sans-serif;
+    margin-top:0px;
+}
+.dashboardlink span:hover{
+    cursor: pointer;
+    color:#4c8646;
+}
+.dashboardlink:focus{
+    outline:none;
+}
+.dashboardlink span{
+    margin-left:10px;
+    margin-right: 10px;
+    text-underline-position: under;
+    text-decoration: underline;
+}
+@media screen and (max-width: 845px) {
+    .dashboardlink {
+        margin-left: 3%;
+    }
+}
+.mainhomecontent{
+    margin-top:10px;
+    height:calc(100% - 100px);
+    width:100%;
+    min-width: 802px;
+}
+.navbarr{
+    float: left;
+    width: 256px;
+    height: 100%;
+    border-right: 4px #132d1a solid;
+    border-radius: 2px;
+}
+.navlink{
+    width: 216px;
+    display: block;
+    height: 46px;
+    padding: 15px;
+    text-align: center;
+    padding-bottom: 15px;
+    background-image: linear-gradient(to right, #588275, rgb(190, 214, 200, 0.5));
+    line-height: 46px;
+    border: 1px #ddd solid;
+    border-radius: 7px;
+    font-family: sans-serif;
+    color: #132d1a;
+    box-sizing: unset;
+}
+.navlink:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    cursor: pointer;
+    text-decoration: underline
+}
+.navlink:focus{
+    outline:none;
+}

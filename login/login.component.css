@@ -1,0 +1,66 @@
+.header{
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 40px;
+  }
+  .error{
+    color: red;
+    margin-left: 25px;
+    font-family: sans-serif;
+    display:block;
+  }
+  div.logo{
+    content:url(http://www.namllp.com/wp-content/uploads/2018/02/cropped-naam-3.png);
+    width:250;
+    height:70;
+    left: calc((100% - 250px)/2);
+    position: relative;
+    margin-top: 20px;
+}
+.contentdiv{
+  width: 470px;
+  height: 445px;
+  position: absolute;
+  top: calc((100% - 445px)/2);
+  left: calc((100% - 470px)/2);
+  border: 3px solid #132d1a;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: #fff;
+}
+.button:hover{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor:pointer;
+}
+.button{
+  display: inline-block;
+  height: 40px;
+  background-image: linear-gradient(to right, #588275, rgb(190, 214, 200, 0.5));
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: sans-serif;
+  color: #132d1a;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: calc(20%/2);
+  width: 80%;
+  margin-top: 25px;
+}
+.savebut{
+  margin-right: 15px;
+  opacity : 0.35
+}
+::ng-deep .mat-form-field-infix{
+  width:360px !important;
+}
+.backdiv{
+  height:100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: linear-gradient(141deg, #9fb8ad 0%, #588275 51%, #132d1a 75%);
+}
+.activesave{
+  opacity: 1;
+}

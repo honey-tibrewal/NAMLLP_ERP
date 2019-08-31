@@ -1,0 +1,30 @@
+<link  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"  rel="stylesheet">
+<div style="height:100%">
+  <div class="backdiv">
+  <div class="contentdiv">
+    <div>
+    <div class="logo"></div>
+      <div>
+        <form [formGroup]="loginForm" style="margin-top:25px">
+          <div class="form-group">
+              <mat-form-field style="margin-left:25px">
+                  <input matInput placeholder="Email address" [formControl]="loginForm.get('email')" required>
+                  <mat-error *ngIf="loginForm.get('email').invalid">{{getErrorMessage('email')}}</mat-error>
+              </mat-form-field>
+          </div>
+          <div class="form-group">
+              <mat-form-field style="margin-left:25px">
+                  <input type="password" matInput placeholder="Password" [formControl]="loginForm.get('password')" required>
+                  <mat-error *ngIf="loginForm.get('password').invalid">{{getErrorMessage('password')}}</mat-error>
+              </mat-form-field>
+          </div>
+          <span class="error">{{errormessage}}</span>
+          <button type="submit" (click)="tryLogin(loginForm.value)" class="button savebut"
+          [disabled]="!loginForm.get('email').valid || !loginForm.get('password').valid"
+          [ngClass] = "(loginForm.get('email').valid && loginForm.get('password').valid)?'activesave':''">Login</button>
+        </form>
+      </div>
+  </div>
+</div>
+  </div>
+</div>
